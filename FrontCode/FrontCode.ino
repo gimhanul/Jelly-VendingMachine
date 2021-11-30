@@ -21,26 +21,21 @@ void reloadLcd() {
   lcd.print(":^D        Jelly");
   lcd.setCursor(0,1);
   lcd.print("is going to you!!");
+  delay(1000);  
   digitalWrite(CN, LOW);
 }
 
 void loop() {
-  byte doing = 0;
-  int five = digitalRead(FIVE);
-
   
-  if(!doing) {
-    lcd.clear(); //LCD 모든 내용 삭제
-    lcd.setCursor(0,0);
-    lcd.print("Put 500 won");
-    lcd.setCursor(0,1);
-    lcd.print("Put 500 won Put 500 won");
-  }
+  int five = digitalRead(FIVE);
+  lcd.clear(); //LCD 모든 내용 삭제
+  lcd.setCursor(0,0);
+  lcd.print("Put 500 won");
+  lcd.setCursor(0,1);
+  lcd.print("Put 500 won Put 500 won");
+  
   if(five) {
-    doing = 1;
     reloadLcd();
-    doing = 0;
-    five = 0;
     Serial.println("잘됨");
    }
 }
