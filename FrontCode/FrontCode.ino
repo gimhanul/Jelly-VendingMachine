@@ -11,7 +11,6 @@ void setup() {
   lcd.backlight(); //LCD 백라이트 켜기
   pinMode(FIVE, INPUT);
   pinMode(CN, OUTPUT);
-  Serial.begin(9600);
 }
 
 void reloadLcd() {
@@ -21,7 +20,7 @@ void reloadLcd() {
   lcd.print(":^D        Jelly");
   lcd.setCursor(0,1);
   lcd.print("is going to you!!");
-  delay(1000);  
+  delay(5000);  
   digitalWrite(CN, LOW);
 }
 
@@ -36,6 +35,5 @@ void loop() {
   
   if(five) {
     reloadLcd();
-    Serial.println("잘됨");
    }
 }
