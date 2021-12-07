@@ -13,18 +13,24 @@ void setup() {
   pinMode(FIVE, INPUT);
   pinMode(CO, OUTPUT);
   pinMode(CI, INPUT);
+  Serial.begin(9600);
 }
 
 void reloadLcd() {
+  int ox=0;
   digitalWrite(CO, HIGH);
   lcd.clear(); //LCD 모든 내용 삭제
   lcd.setCursor(0,0);
   lcd.print(":^D        Jelly");
   lcd.setCursor(0,1);
   lcd.print("is going to you!!");
-  delay(5000);
-  if(CI) {
-    digitalWrite(CO, LOW);
+  while(1){
+    ox = digitalRead(CI);
+    Serial.println(ox);
+    if(ox==1) {
+      digitalWrite(CO, LOW);
+      break;
+    }
   }
 }
 
