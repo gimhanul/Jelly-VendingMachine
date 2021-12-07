@@ -1,18 +1,18 @@
 #include <stdlib.h>
 #include <Stepper.h>
-#define CN 7
+#define CI 12
+#define CO 13
 
 int before = 0;
-int ox;
 const int stepsPerRevolution = 64;
 int exe;
 
 // flag -> 다른 아두이노와 통신이 들어왓는가
 // 결선 1, 2, 3, 4 차례로 8, 9, 10, 11
-Stepper myStepper1(stepsPerRevolution, 11,9,10,8);
-Stepper myStepper2(stepsPerRevolution, 6,4,5,3);  
-Stepper myStepper3(stepsPerRevolution, A2,A0,A1,13);
-Stepper myStepper4(stepsPerRevolution, 2,A4,A5,A3);
+Stepper myStepper1(stepsPerRevolution, A3,A1,A2,A0);
+Stepper myStepper2(stepsPerRevolution, 3,A5,2,A4);  
+Stepper myStepper3(stepsPerRevolution, 7,5,6,4);
+Stepper myStepper4(stepsPerRevolution, 11,9,10,8);
 
 void spin(){
   //랜덤으로 4개중 하나 돌리기
@@ -45,6 +45,7 @@ void spin(){
     default:
       break;
   }
+  delay(1000);
 }
 
 void setup() {
@@ -53,18 +54,21 @@ void setup() {
   myStepper2.setSpeed(500);
   myStepper3.setSpeed(500);
   myStepper4.setSpeed(500);
-  pinMode(CN, INPUT);
+  pinMode(CI, INPUT);
+  pinMode(CO, OUTPUT);
 }
 
 void loop() {
-  Serial.println(ox);
-  Serial.print(before);
-  int ox = digitalRead(CN);
-  if(before != ox) {
-    if(ox==1) {
-      spin();
+  int ox = 0;
+  ox = digitalRead(CI);
+  if(ox==1){
+    Serial.println("값이 들어왔습니다");
+    spin();
+    digitalWrite(CO, 1);
     }
-    before ^= 1;
+  else{
+    Serial.println("값이 안 들어왔습니다");
+    digitalWrite(CO, 0);
   }
-  delay(1000);
+  ox = 0;
 }
